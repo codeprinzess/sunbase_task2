@@ -17,6 +17,9 @@ public class CircleManager : MonoBehaviour
 
     private bool drawingLine = false;
 
+    [Header("UI Setup")]
+    public Canvas canvas; // Reference to your Canvas object
+
     private void Start()
     {
         restartButton.onClick.AddListener(Restart);
@@ -30,7 +33,8 @@ public class CircleManager : MonoBehaviour
             drawingLine = true;
             lineStartPos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
             lineStartPos.z = 0;
-            currentLine = Instantiate(linePrefab, lineStartPos, Quaternion.identity);
+            currentLine = Instantiate(linePrefab, lineStartPos, Quaternion.identity, canvas.transform); // Attach to canvas
+            currentLine.GetComponent<LineRenderer>().positionCount = 2; // Set up LineRenderer
         }
         else if (Input.GetMouseButtonUp(0))
         {
